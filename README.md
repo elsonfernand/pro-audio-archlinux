@@ -1,6 +1,8 @@
-# O que esse script faz (ou tenta fazer) #
+<h1 align="center"> O que esse script faz (ou tenta fazer) </h1>
 
-![image](https://github.com/user-attachments/assets/30789f09-c237-45b8-b66c-a56f40cfbcb7)
+<p align="center">
+  <img width="250" src="https://th.bing.com/th/id/OIG2.J4trgm2XhgGuB_tG1jWR?w=1024&h=1024&rs=1&pid=ImgDetMain">
+</p>
 
 01. **Atualização do Sistema:** Atualiza todos os pacotes instalados no sistema.
 02. **Função *instalar_pacote*:** Verifica se cada pacote está instalado antes de tentar instalá-lo.
