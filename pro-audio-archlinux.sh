@@ -31,6 +31,16 @@ if systemctl list-unit-files | grep -q 'wireplumber.service'; then
     sudo systemctl enable --now wireplumber.service
 fi
 
+# Cria os grupos 'realtime' e 'audio' se não existirem
+echo "Verificando e criando grupos 'realtime' e 'audio' se necessário..."
+if ! grep -q '^realtime:' /etc/group; then
+    sudo groupadd realtime
+fi
+
+if ! grep -q '^audio:' /etc/group; then
+    sudo groupadd audio
+fi
+
 # Adiciona o usuário aos grupos 'realtime' e 'audio' para privilégios de tempo real
 echo "Adicionando usuário aos grupos 'realtime' e 'audio'..."
 sudo usermod -aG realtime,audio $USER
@@ -62,7 +72,18 @@ sudo sysctl -p /etc/sysctl.d/99-sysctl.conf
 # Configura o 'governor' da CPU para 'performance'
 echo "Configurando o governor da CPU para 'performance'..."
 sudo systemctl enable cpupower.service
-sudo cpupower frequency-set -g performance
+sudo systemctl start cpupower.service
+sudo tee /etc/default/cpupower > /dev/null <<EOF
+# Define o 'governor' a ser usado pelo cpupower
+governor='performance'
+EOF
+
+sudo systemctl restart cpupower.service
+
+# Verifica se a configuração do governor foi aplicada corretamente
+if ! cpupower frequency-info | grep -q "The governor \"performance\" may decide which"; then
+    echo "Falha ao definir o governor da CPU como 'performance'. Verifique a configuração manualmente."
+fi
 
 # Instala 'rtcqs' para verificar o sistema se não estiver instalado
 if ! command -v rtcqs &> /dev/null; then
@@ -101,17 +122,12 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 
 # Instala kernel de tempo real 'linux-rt' se não estiver instalado
-if ! pacman -Qs linux-rt > /dev/null ; then
-    echo "Instalando kernel de tempo real 'linux-rt'..."
-    git clone https://aur.archlinux.org/linux-rt.git
-    cd linux-rt
-    yes | makepkg -si
-    cd ..
-    rm -rf linux-rt
-fi
+# Instala kernel de tempo real 'linux-rt' se não estiver instalado
+instalar_pacote linux-rt
 
 # Desabilita mitigações de Spectre/Meltdown
 echo "Desabilitando mitigações de Spectre/Meltdown..."
+sudo mkdir -p /etc/default/grub.d
 sudo tee /etc/default/grub.d/99-spectre-meltdown.cfg > /dev/null <<EOF
 GRUB_CMDLINE_LINUX_DEFAULT="mitigations=off"
 EOF
