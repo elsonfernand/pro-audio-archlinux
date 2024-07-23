@@ -1,8 +1,13 @@
 <h1 align="center"> O que esse script faz (ou tenta fazer) </h1>
 
 <p align="center">
-  <img width="250" src="https://th.bing.com/th/id/OIG2.J4trgm2XhgGuB_tG1jWR?w=1024&h=1024&rs=1&pid=ImgDetMain">
+  <img width="250" src="https://th.bing.com/th/id/OIG2.J4trgm2XhgGuB_tG1jWR?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Tux, boladão, fazendo um som" >
 </p>
+<p align="center">
+  <img width="160" src="https://archlinux.org/static/logos/archlinux-logo-dark-scalable.518881f04ca9.svg" alt="Arch Linux logo svg" >
+</p>
+
+Seguindo <a href="https://wiki.linuxaudio.org/wiki/system_configuration" target="blank">a wiki do Linux Audio</a> e verificando com o "rtcqs" (Realtime Configuration Quick Scan), esses são alguns passos para configuração de baixa latência no Arch Linux.
 
 01. **Atualização do Sistema:** Atualiza todos os pacotes instalados no sistema.
 02. **Função *instalar_pacote*:** Verifica se cada pacote está instalado antes de tentar instalá-lo.
