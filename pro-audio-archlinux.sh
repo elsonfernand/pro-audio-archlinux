@@ -122,7 +122,7 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 
 # Instala kernel de tempo real 'linux-rt' se não estiver instalado e o pacote "realtime-privileges"
-instalar_pacote linux-rt realtime-privileges
+instalar_pacote linux-rt linux-rt-headers realtime-privileges
 
 # Desabilita mitigações de Spectre/Meltdown
 echo "Desabilitando mitigações de Spectre/Meltdown..."
