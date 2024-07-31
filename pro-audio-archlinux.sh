@@ -107,7 +107,7 @@ fi
 # fi
 # if systemctl list-unit-files | grep -q 'tuned.service'; then
 #     sudo systemctl enable --now tuned
-#     sudo tuned-adm profile latency-performance
+#     tuned-adm profile latency-performance
 # fi
 
 # Configura o acesso a /dev/cpu_dma_latency
