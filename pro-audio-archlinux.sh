@@ -71,8 +71,7 @@ sudo sysctl -p /etc/sysctl.d/99-sysctl.conf
 
 # Configura o 'governor' da CPU para 'performance'
 echo "Configurando o governor da CPU para 'performance'..."
-sudo systemctl enable cpupower.service
-sudo systemctl start cpupower.service
+sudo systemctl enable --now cpupower.service
 sudo tee /etc/default/cpupower > /dev/null <<EOF
 # Define o 'governor' a ser usado pelo cpupower
 governor='performance'
@@ -107,8 +106,7 @@ fi
 #     rm -rf tuned
 # fi
 # if systemctl list-unit-files | grep -q 'tuned.service'; then
-#     sudo systemctl enable tuned
-#     sudo systemctl start tuned
+#     sudo systemctl enable --now tuned
 #     sudo tuned-adm profile latency-performance
 # fi
 
