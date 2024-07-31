@@ -97,20 +97,20 @@ else
     echo "rtcqs já está instalado."
 fi
 
-# Instala e configura 'tuned' se não estiver instalado
-if ! pacman -Qs tuned > /dev/null ; then
-    echo "Instalando tuned..."
-    git clone https://aur.archlinux.org/tuned.git
-    cd tuned
-    yes | makepkg -si
-    cd ..
-    rm -rf tuned
-fi
-if systemctl list-unit-files | grep -q 'tuned.service'; then
-    sudo systemctl enable tuned
-    sudo systemctl start tuned
-    sudo tuned-adm profile latency-performance
-fi
+# Instala e configura 'tuned' se não estiver instalado (comentado pois estava atrasando o carregamento do LXDM)
+# if ! pacman -Qs tuned > /dev/null ; then
+#     echo "Instalando tuned..."
+#     git clone https://aur.archlinux.org/tuned.git
+#     cd tuned
+#     yes | makepkg -si
+#     cd ..
+#     rm -rf tuned
+# fi
+# if systemctl list-unit-files | grep -q 'tuned.service'; then
+#     sudo systemctl enable tuned
+#     sudo systemctl start tuned
+#     sudo tuned-adm profile latency-performance
+# fi
 
 # Configura o acesso a /dev/cpu_dma_latency
 echo "Configurando acesso a /dev/cpu_dma_latency..."
