@@ -20,4 +20,4 @@ Seguindo <a href="https://wiki.linuxaudio.org/wiki/system_configuration" target=
 09. **Instalação e Configuração do "tuned":** Instala o tuned, ativa e aplica o perfil de latency-performance.
 10. **Configurar Acesso a */dev/cpu_dma_latency*:** Adiciona uma regra *udev* para configurar o acesso a */dev/cpu_dma_latency*.
 
-Este script deve cobrir a maioria das otimizações necessárias para gravação de áudio com baixa latência no Arch Linux. Depois de executar o script, é recomendável reiniciar o sistema para garantir que todas as configurações sejam aplicadas corretamente.
+Este script deve cobrir a maioria das otimizações necessárias para gravação de áudio com baixa latência no Arch Linux. Depois de executar o script, é recomendável reiniciar o sistema para garantir que todas as configurações sejam aplicadas corretamente. Caso alguma configuração seguindo o *rtcqs* não dê certo, o próprio script tem os links relacionados (em inglês) pra você se virar e resolver teus 'pobrema'.
