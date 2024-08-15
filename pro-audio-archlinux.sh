@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#█░█ █▀▀ █▀█ █ █▀▀ █ █▀▀ ▄▀█ █▀▀ ▄▀█ █▀█   █▀▄ █▀▀   █▀█ ▄▀█ █▀▀ █▀█ ▀█▀ █▀▀ █▀
+#▀▄▀ ██▄ █▀▄ █ █▀░ █ █▄▄ █▀█ █▄▄ █▀█ █▄█   █▄▀ ██▄   █▀▀ █▀█ █▄▄ █▄█ ░█░ ██▄ ▄█
+
 # Atualizar os pacotes do sistema
 echo "Atualizando pacotes do sistema..."
 sudo pacman -Syu --noconfirm
@@ -16,6 +19,8 @@ function instalar_pacote {
     done
 }
 
+#█▀█ █ █▀█ █▀▀ █░█░█ █ █▀█ █▀▀
+#█▀▀ █ █▀▀ ██▄ ▀▄▀▄▀ █ █▀▄ ██▄
 # Instala PipeWire e pacotes relacionados
 echo "Instalando PipeWire e pacotes relacionados se não estiverem instalados..."
 instalar_pacote pipewire pipewire-pulse pipewire-jack pipewire-alsa wireplumber cpupower
@@ -31,6 +36,8 @@ if systemctl list-unit-files | grep -q 'wireplumber.service'; then
     sudo systemctl enable --now wireplumber.service
 fi
 
+#█▀▀ █▀█ █░█ █▀█ █▀█ █▀
+#█▄█ █▀▄ █▄█ █▀▀ █▄█ ▄█
 # Cria os grupos 'realtime' e 'audio' se não existirem
 echo "Verificando e criando grupos 'realtime' e 'audio' se necessário..."
 if ! grep -q '^realtime:' /etc/group; then
@@ -45,6 +52,8 @@ fi
 echo "Adicionando usuário aos grupos 'realtime' e 'audio'..."
 sudo usermod -aG realtime,audio $USER
 
+#█░░ █ █▀▄▀█ █ ▀█▀ █▀▀   █▀█ █▀▀ ▄▀█ █░░ ▀█▀ █ █▀▄▀█ █▀▀
+#█▄▄ █ █░▀░█ █ ░█░ ██▄   █▀▄ ██▄ █▀█ █▄▄ ░█░ █ █░▀░█ ██▄
 # Configura limites de tempo real
 echo "Configurando limites de tempo real..."
 sudo tee /etc/security/limits.d/99-realtime.conf > /dev/null <<EOF
@@ -54,6 +63,8 @@ sudo tee /etc/security/limits.d/99-realtime.conf > /dev/null <<EOF
 @audio      -  memlock    unlimited
 EOF
 
+#█▄▀ █▀▀ █▀█ █▄░█ █▀▀ █░░
+#█░█ ██▄ █▀▄ █░▀█ ██▄ █▄▄
 # Ajusta parâmetros do kernel para otimização de áudio
 echo "Ajustando parâmetros do kernel..."
 sudo tee /etc/sysctl.d/99-sysctl.conf > /dev/null <<EOF
@@ -69,6 +80,8 @@ EOF
 # Aplica as mudanças do sysctl
 sudo sysctl -p /etc/sysctl.d/99-sysctl.conf
 
+#█▀▀ █▀█ █░█   █▀▀ █▀█ █░█ █▀▀ █▀█ █▄░█ █▀█ █▀█
+#█▄▄ █▀▀ █▄█   █▄█ █▄█ ▀▄▀ ██▄ █▀▄ █░▀█ █▄█ █▀▄
 # Configura o 'governor' da CPU para 'performance'
 echo "Configurando o governor da CPU para 'performance'..."
 sudo systemctl enable --now cpupower.service
@@ -84,6 +97,8 @@ if ! cpupower frequency-info | grep -q "The governor \"performance\" may decide 
     echo "Falha ao definir o governor da CPU como 'performance'. Verifique a configuração manualmente."
 fi
 
+#█▀█ ▀█▀ █▀▀ █▀█ █▀
+#█▀▄ ░█░ █▄▄ ▀▀█ ▄█
 # Instala 'rtcqs' para verificar o sistema se não estiver instalado
 if ! command -v rtcqs &> /dev/null; then
     echo "Instalando rtcqs..."
@@ -96,6 +111,8 @@ else
     echo "rtcqs já está instalado."
 fi
 
+#▀█▀ █░█ █▄░█ █▀▀ █▀▄
+#░█░ █▄█ █░▀█ ██▄ █▄▀
 # Instala e configura 'tuned' se não estiver instalado
 if ! pacman -Qs tuned > /dev/null ; then
     echo "Instalando tuned..."
@@ -110,6 +127,8 @@ if systemctl list-unit-files | grep -q 'tuned.service'; then
     echo "latency-performance" | sudo tee /etc/tuned/active_profile > /dev/null
 fi
 
+#█▀▀ █▀█ █░█   █▀▄ █▀▄▀█ ▄▀█   █░░ ▄▀█ ▀█▀ █▀▀ █▄░█ █▀▀ █▄█
+#█▄▄ █▀▀ █▄█   █▄▀ █░▀░█ █▀█   █▄▄ █▀█ ░█░ ██▄ █░▀█ █▄▄ ░█░
 # Configura o acesso a /dev/cpu_dma_latency
 echo "Configurando acesso a /dev/cpu_dma_latency..."
 sudo tee /etc/udev/rules.d/99-cpu-dma-latency.rules > /dev/null <<EOF
@@ -119,15 +138,22 @@ EOF
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 
+#█▄▀ █▀▀ █▀█ █▄░█ █▀▀ █░░   █▀█ ▀█▀
+#█░█ ██▄ █▀▄ █░▀█ ██▄ █▄▄   █▀▄ ░█░
 # Instala kernel de tempo real 'linux-rt' se não estiver instalado e o pacote "realtime-privileges"
 instalar_pacote linux-rt linux-rt-headers realtime-privileges
 
+#█▀▄▀█ █ ▀█▀ █ █▀▀ ▄▀█ █▀▀ █▀█ █▀▀ █▀
+#█░▀░█ █ ░█░ █ █▄█ █▀█ █▄▄ █▄█ ██▄ ▄█
 # Desabilita mitigações de Spectre/Meltdown
 echo "Desabilitando mitigações de Spectre/Meltdown..."
 sudo mkdir -p /etc/default/grub.d
 sudo tee /etc/default/grub.d/99-spectre-meltdown.cfg > /dev/null <<EOF
 GRUB_CMDLINE_LINUX_DEFAULT="mitigations=off"
 EOF
+
+#▄▀█ ▀█▀ █░█ ▄▀█ █░░ █ ▀█ ▄▀█ █▀▀ ▄▀█ █▀█   █▀▄ █▀█   █▀▀ █▀█ █░█ █▄▄
+#█▀█ ░█░ █▄█ █▀█ █▄▄ █ █▄ █▀█ █▄▄ █▀█ █▄█   █▄▀ █▄█   █▄█ █▀▄ █▄█ █▄█
 
 # Atualiza o GRUB
 sudo grub-mkconfig -o /boot/grub/grub.cfg
