@@ -1,7 +1,7 @@
 <h1 align="center"> O que esse script faz (ou tenta fazer) </h1>
 
 <p align="center">
-  <img width="250" src="https://th.bing.com/th/id/OIG2.J4trgm2XhgGuB_tG1jWR?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Tux, boladão, fazendo um som" >
+  <img width="250" src="https://i.imgur.com/FjW9TvZ.jpeg)" alt="Tux, boladão, fazendo um som" >
 </p>
 <p align="center">
   <img width="160" src="https://archlinux.org/static/logos/archlinux-logo-dark-scalable.518881f04ca9.svg" alt="Arch Linux logo svg" >
