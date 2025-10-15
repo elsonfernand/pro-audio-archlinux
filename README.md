@@ -22,7 +22,7 @@ Seguindo <a href="https://wiki.linuxaudio.org/wiki/system_configuration" target=
 
 Este script deve cobrir a maioria das otimizações necessárias para gravação de áudio com baixa latência no Arch Linux. Depois de executar o script, é recomendável reiniciar o sistema para garantir que todas as configurações sejam aplicadas corretamente. Caso alguma configuração seguindo o *rtcqs* não dê certo, o próprio script tem os links relacionados (em inglês) pra você se virar e resolver teus 'pobrema'.
 
-OBS: Na minha última tentativa, os ítens "CPU Frequency Scaling" e "Simultaneous Multithreading", verificados pelo *rtcqs*, não funcionaram. Bom, funcionaram mas não ficaram gravadas depois de reiniciado o sistema. A solução que encontrei foi iniciar as modificações direto no *systemd*. Assim:
+OBS: Na minha última tentativa, os itens "CPU Frequency Scaling" e "Simultaneous Multithreading", verificados pelo *rtcqs*, não funcionaram. Bom, funcionaram mas não ficaram gravadas depois de reiniciado o sistema. A solução que encontrei foi iniciar as modificações direto no *systemd*. Assim:
 
 01. Crie um novo arquivo de serviço com o seu editor favorito:
 ```
