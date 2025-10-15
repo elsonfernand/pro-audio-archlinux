@@ -21,3 +21,36 @@ Seguindo <a href="https://wiki.linuxaudio.org/wiki/system_configuration" target=
 10. **Configurar Acesso a */dev/cpu_dma_latency*:** Adiciona uma regra *udev* para configurar o acesso a */dev/cpu_dma_latency*.
 
 Este script deve cobrir a maioria das otimizações necessárias para gravação de áudio com baixa latência no Arch Linux. Depois de executar o script, é recomendável reiniciar o sistema para garantir que todas as configurações sejam aplicadas corretamente. Caso alguma configuração seguindo o *rtcqs* não dê certo, o próprio script tem os links relacionados (em inglês) pra você se virar e resolver teus 'pobrema'.
+
+OBS: Na minha última tentativa, os ítens "CPU Frequency Scaling" e "Simultaneous Multithreading", verificados pelo *rtcqs*, não funcionaram. Bom, funcionaram mas não ficaram gravadas depois de reiniciado o sistema. A solução que encontrei foi iniciar as modificações direto no *systemd*. Assim:
+
+01. Crie um novo arquivo de serviço com o seu editor favorito:
+```
+sudo nano /etc/systemd/system/audio-setup.service
+```
+> [!NOTE]
+> Aqui estou usando o *nano* porque sim. Se você estiver usando também, ótimo!
+
+02. Com *CTRL + C* e *CTRL + Shift + V* cole o seguinte conteúdo:
+```
+[Unit]
+Description=Setup CPU for low-latency audio
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash -c '\
+  cpupower frequency-set -g performance && \
+  echo off > /sys/devices/system/cpu/smt/control'
+
+[Install]
+WantedBy=multi-user.target
+```
+
+03. Ative o serviço:
+```
+sudo systemctl daemon-reload
+sudo systemctl enable --now audio-setup.service
+```
+
+Agora muito provavelmente você vai ter esses dois itens configurados como manda o *rtcqs*.
